@@ -29,11 +29,6 @@ export class RecipeService {
             },
           },
           ingredients,
-          // user: {
-          //   connect: {
-          //     id: data.user_id,
-          //   },
-          // },
         },
       });
       return recipes;
@@ -46,15 +41,12 @@ export class RecipeService {
     meta: { total_pages: number; total_count: number; current_page: number; page_size: number; has_next_page: boolean; has_previous_page: boolean };
   }> {
     try {
-      console.log(112);
       const skip = (page - 1) * page_size;
-      console.log(page_size, 243543, skip, page);
-
       const recipes = await this.recipe.findMany({
         skip,
         take: page_size,
         orderBy: {
-          created_at: 'desc', // Optional: Sort by creation date or any other field
+          created_at: 'desc',
         },
         include: {
           category: true,
@@ -77,18 +69,7 @@ export class RecipeService {
       throw new HttpException(status.BAD_REQUEST, `Something went wrong: ${error.message}`);
     }
   }
-  // public async fetchUserRecipe(user_id: string): Promise<Recipe[]> {
-  //   try {
-  //     const recipes = await this.recipe.findMany({
-  //       where: {
-  //         user_id,
-  //       },
-  //     });
-  //     return recipes;
-  //   } catch (error) {
-  //     throw new HttpException(status.BAD_REQUEST, `Something went wrong: ${error.message}`);
-  //   }
-  // }
+
   public async fetchOne(id: string): Promise<Recipe> {
     try {
       const recipes = await this.recipe.findUnique({
@@ -101,6 +82,7 @@ export class RecipeService {
       throw new HttpException(status.BAD_REQUEST, `Something went wrong: ${error.message}`);
     }
   }
+
   public async updateOne(id: string, data: UpdateRecipeDto): Promise<Recipe> {
     try {
       const response = await this.recipe.findUnique({
@@ -117,6 +99,7 @@ export class RecipeService {
           instructions: data.instructions ? data.instructions : response.instructions,
           description: data.description ? data.description : response.description,
           category_id: data.category_id ? data.category_id : response.category_id,
+          file: data.file ? data.file : response.file,
         },
       });
 

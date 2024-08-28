@@ -1,7 +1,6 @@
 "use client";
 import RecipeCard from "@/components/Card/RecipeCard";
-import { Input, SelectInput } from "@/components/Input/Index";
-import { setRerender } from "@/redux/features/slice/app.slice";
+import { SelectInput } from "@/components/Input/Index";
 import { openComponentModal } from "@/redux/features/slice/modal.slice";
 import { MODAL_ENUM } from "@/redux/features/types";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -9,7 +8,6 @@ import { useFetchRecipesQuery } from "@/redux/services/recipe.service";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
-import { MdEditNote, MdOutlineDeleteOutline } from "react-icons/md";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -45,6 +43,7 @@ export default function Home() {
           />
         </div>
         <button
+          data-testid="add-recipe-button"
           onClick={() =>
             dispatch(
               openComponentModal({
@@ -58,11 +57,14 @@ export default function Home() {
           Add Recipe
         </button>
       </div>
-      <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
+      <div
+        data-testid="recipe-list"
+        className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 p-4"
+      >
         {recipes.length ? (
           recipes.map((recipe) => (
             <Fragment key={recipe.id}>
-              <RecipeCard recipe={recipe} />
+              <RecipeCard recipe={recipe} data-testid="recipe-card" />
             </Fragment>
           ))
         ) : (

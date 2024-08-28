@@ -29,7 +29,7 @@ const Button = ({
         outline
           ? "border-emerald-700 text-emerald-800 bg-white border"
           : "bg-emerald-700 text-white"
-      } p-2 w-full flex h-10 justify-center items-center relative px-12 uppercase  text-sm font-semibold rounded-sm hover:bg-emerald-600  transition-all `}
+      } p-2 w-full flex h-10 disabled:opacity-60 justify-center items-center relative px-12 uppercase  text-sm font-semibold rounded-sm hover:bg-emerald-600  transition-all `}
     >
       {isLoading ? <Spinner /> : name}
     </button>

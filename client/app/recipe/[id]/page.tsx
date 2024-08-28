@@ -2,7 +2,6 @@
 import { openComponentModal } from "@/redux/features/slice/modal.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useParams, useRouter } from "next/navigation";
-import router from "next/router";
 import React, { useEffect } from "react";
 import { MdEditNote, MdOutlineDeleteOutline } from "react-icons/md";
 import Image from "next/image";
@@ -19,10 +18,11 @@ const Page = (props: Props) => {
   const [fetchRecipe, { isLoading }] = useFetchRecipeMutation();
   const dispatch = useAppDispatch();
   const { recipe } = useAppSelector((state) => state.app);
-  console.log(recipe);
+
   useEffect(() => {
     if (!recipe) router.push("/");
   }, [recipe]);
+
   useEffect(() => {
     fetchRecipe(param.id);
   }, [param.id]);
@@ -106,7 +106,7 @@ const Page = (props: Props) => {
             </div>
             <div className="h-[2px] w-full bg-indigo-800 opacity-20" />
 
-            <div className="flex justify-start flex-wrap gap-4">
+            <div className="flex justify-start flex-wrap gap-4 whitespace-pre-line">
               {recipe?.instructions}
             </div>
           </div>

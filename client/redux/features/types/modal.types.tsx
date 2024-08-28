@@ -12,8 +12,6 @@ export interface ModalInitialTypes {
 }
 
 export enum MODAL_ENUM {
-  AUTH_MODAL = "AuthModal",
-  LOGOUT_MODAL = "LogoutModal",
   RECIPE_MODAL = "RecipeModal",
   DELETE_MODAL = "DeleteModal",
 }

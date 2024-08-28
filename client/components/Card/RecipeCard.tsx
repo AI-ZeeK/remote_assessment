@@ -3,7 +3,7 @@ import React from "react";
 import { MdEditNote, MdOutlineDeleteOutline } from "react-icons/md";
 import Image from "next/image";
 import { useAppDispatch } from "@/redux/hooks";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { MODAL_ENUM } from "@/redux/features/types";
 
 type Props = {
@@ -13,8 +13,6 @@ type Props = {
 const RecipeCard = ({ recipe }: Props) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const pathname = usePathname();
-  const nav_pathname = pathname.split("/")[1];
 
   return (
     <div className="flex flex-col gap-2 cursor-pointer text-black bg-emerald-200 relative w-full">
@@ -50,9 +48,8 @@ const RecipeCard = ({ recipe }: Props) => {
         <Image
           src={recipe.file}
           alt=""
-          width={1000}
-          height={1000}
-          loading="lazy"
+          width={200}
+          height={200}
           className="md:h-72 h-64 w-full  object-cover object-right-top hover:scale-110 transition-all duration-700"
         />
       </div>
@@ -100,7 +97,7 @@ const RecipeCard = ({ recipe }: Props) => {
         </div>
         <div className="h-[2px] w-full opacity-20" />
 
-        <div className="flex justify-start flex-wrap gap-4 w-full">
+        <div className="flex justify-start flex-wrap gap-4 w-full whitespace-pre-line">
           {recipe.instructions.length > 60 ? (
             <p className="w-full text-wrap grid whit">
               <span className="flex-wrap flex justify-start text-wrap items-center w-full">

@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { Routes } from '@interfaces/routes.interface';
-import { AuthMiddleware } from '@middlewares/auth.middleware';
 import { ValidationMiddleware } from '@middlewares/validation.middleware';
 import { CategoryController } from '@/controllers/category.controller';
 import { CreateCategoryDto } from '@/dtos/category.dto';

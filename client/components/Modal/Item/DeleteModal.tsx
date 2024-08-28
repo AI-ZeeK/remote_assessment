@@ -13,11 +13,8 @@ import {
 import React, { useEffect, useState } from "react";
 import { RiDeleteBin3Line } from "react-icons/ri";
 
-type Props = {
-  data: string;
-};
-
-const DeleteModal = ({ data }: Props) => {
+const DeleteModal = () => {
+  const { data } = useAppSelector((state) => state.modal);
   const toast = useToast();
   const dispatch = useAppDispatch();
   const [deleteRecipe, { isLoading, error, data: resData, isSuccess }] =

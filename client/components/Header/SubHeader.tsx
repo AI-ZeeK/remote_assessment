@@ -41,27 +41,6 @@ const SubHeader = (props: Props) => {
           <Avatar cursor={"pointer"} size="md" name={"default"} />
         </WrapItem>
       </div>
-      <ul className="justify-center items-center font-semibold  text-sm hidden md:flex gap-2">
-        {/* {navData.map((data) => (
-          <Link
-            key={data.id}
-            href={data.link}
-            className={`${
-              `/${nav_pathname}` === data.link
-                ? "after:w-full"
-                : "text-[#737373]"
-            } ${
-              montserrat.className
-            } flex justify-center tracking-wide items-center  cursor-pointer p-2 w-full transition-all relative after:absolute after:bottom-0 after:left-[50%] after:translate-x-[-50%] after:w-0 after:h-1  rounded-full  after:bg-black after:content-[''] after:transition-all hover:after:w-full`}
-          >
-            <span
-              className={`${montserrat.className} text-sm whitespace-nowrap font-semibold`}
-            >
-              {data.head}
-            </span>
-          </Link>
-        ))} */}
-      </ul>
       <div className="flex justify-end items-center gap-1 ">
         <span
           className="p-2 md:hidden cursor-pointer"

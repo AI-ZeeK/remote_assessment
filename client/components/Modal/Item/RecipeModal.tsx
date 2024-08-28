@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { Button, Input, SelectInput } from "@/components/Input/Index";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useCategryQuery } from "@/redux/services/category.service";
@@ -7,35 +6,23 @@ import {
   useFetchRecipeMutation,
   useUpdateRecipeMutation,
 } from "@/redux/services/recipe.service";
-
 import { ModalCloseButton, ModalContent, ModalHeader } from "@chakra-ui/react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { IoIosUnlock } from "react-icons/io";
 import axios from "axios";
-import { RECIPES, UPLOAD } from "@/redux/services/CONSTANTS";
-import {
-  resetIsFormData,
-  setIsFormData,
-} from "@/redux/features/slice/user.slice";
+import { UPLOAD } from "@/redux/services/CONSTANTS";
 import { closeModal } from "@/redux/features/slice/modal.slice";
-import SpinnerPage from "@/components/Spinner/Spinner";
 import { toast } from "sonner";
 import { setRerender } from "@/redux/features/slice/app.slice";
 
-type Props = {
-  data: string | null;
-};
-
-const RecipeModal = ({ data }: Props) => {
+const RecipeModal = () => {
+  const { data } = useAppSelector((state) => state.modal);
   const [isUpdate, setIsUpdate] = useState(false);
   const [id, setId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   useCategryQuery("");
   const [fetchRecipe] = useFetchRecipeMutation();
   const { categories } = useAppSelector((state) => state.app);
-  const { token } = useAppSelector((state) => state.user);
 
   const [createRecipe, { isLoading, isSuccess, isError, error }] =
     useCreateRecipeMutation();
@@ -64,7 +51,6 @@ const RecipeModal = ({ data }: Props) => {
   });
   const handleInputChange = (e: any) => {
     setFormData((prev: any) => ({ ...prev, [e.target.name]: e.target.value }));
-    if (e.target.files) setSelectedFile(e.target.files[0]);
   };
 
   useEffect(() => {
@@ -105,15 +91,12 @@ const RecipeModal = ({ data }: Props) => {
 
       if (response.data) {
         toast.success("file uploaded successfully");
-        console.log(response.data.data, 28109);
-        console.log("!&#@(#&*(!@", e.target.files[0], 28109);
         setSelectedFile(e.target.files[0]);
         setFormData((pre) => ({ ...pre, file: response?.data?.data }));
       }
       setLoading(false);
     } catch (error) {
       setLoading(false);
-
       toast.success("file upload unsuccessful");
     }
   };
@@ -157,13 +140,16 @@ const RecipeModal = ({ data }: Props) => {
       dispatch(closeModal());
     }
     if (isError) {
-      console.log("error:", error);
       toast.error(error?.data?.message ?? "Network Error");
     }
   }, [isSuccess, isError]);
 
   return (
-    <ModalContent className="flex flex-col" w={"94%"}>
+    <ModalContent
+      className="flex flex-col"
+      w={"94%"}
+      data-testid="recipe-modal"
+    >
       <ModalHeader className="uppercase">
         {isUpdate ? "Update Recipe" : "Create Recipe"}
       </ModalHeader>

@@ -23,7 +23,6 @@ export class RecipeController {
     try {
       const data = req.query;
 
-      console.log(data);
       const page = data.page ? Number(data.page) : 1;
       const page_size = data.page_size ? Number(data.page_size) : 5;
 
@@ -35,21 +34,11 @@ export class RecipeController {
     }
   };
 
-  // public fetchUserRecipe = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  //   try {
-  //     const { user_id } = req.params;
-  //     const recipeData = await this.recipeService.fetchUserRecipe(user_id);
-  //     res.status(201).json({ data: recipeData, message: 'user recipes fetched successfully' });
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // };
-
   public fetchRecipe = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { recipe_id } = req.params;
       const recipeData = await this.recipeService.fetchOne(recipe_id);
-      res.status(201).json({ data: recipeData, message: 'recipe fetched successfully' });
+      res.status(200).json({ data: recipeData, message: 'recipe fetched successfully' });
     } catch (error) {
       next(error);
     }
@@ -58,9 +47,8 @@ export class RecipeController {
     try {
       const { recipe_id } = req.params;
       const data: UpdateRecipeDto = req.body;
-      const file = req.file ? req.file.filename : null;
 
-      const recipeData = await this.recipeService.updateOne(recipe_id, { ...data, file });
+      const recipeData = await this.recipeService.updateOne(recipe_id, data);
       res.status(201).json({ data: recipeData, message: 'recipe updated successfully' });
     } catch (error) {
       next(error);

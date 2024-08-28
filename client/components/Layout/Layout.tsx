@@ -30,11 +30,8 @@ const Layout = ({
   const headerRef: any = useRef(null);
   const bodyRef: any = useRef(null);
   const pathname = usePathname();
-  const nav_pathname = pathname.split("/")[1];
-  const router = useRouter();
 
   const dispatch = useAppDispatch();
-  // const { user } = useAppSelector((state) => state.user);
 
   const handleClickOutside = (event: any) => {
     if (
@@ -45,9 +42,6 @@ const Layout = ({
       dispatch(closeSubNav());
     }
   };
-  // useEffect(() => {
-  //   if (!user) router.push("/");
-  // });
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -60,7 +54,6 @@ const Layout = ({
     dispatch(closeSubNav());
   }, [dispatch, pathname]);
 
-  const excludeSubNav = ["/auth", "/contact"];
   return (
     <ChakraProvider
       toastOptions={{ defaultOptions: { position: "top-right" } }}

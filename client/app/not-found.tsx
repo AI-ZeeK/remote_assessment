@@ -5,7 +5,7 @@ type Props = {};
 
 const NotFound = (props: Props) => {
   return (
-    <div className="p-8 text-black bg-white flex justify-center items-center">
+    <div className="p-8 text-black bg-white flex justify-center items-center min-h-screen">
       <div className="border-black border-2 p-8 flex flex-col gap-8 justify-center items-center max-w-[40rem]">
         <h2 className="sm:text-8xl text-6xl">404</h2>
         <h4 className="text-2xl sm:text-5xl">Page Not Found</h4>

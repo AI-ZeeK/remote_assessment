@@ -25,9 +25,7 @@ export class DefaultRoute implements Routes {
     });
     this.router.post(`${this.path}api/uploadfile`, this.upload.single('file'), (req: Request & { file: any }, res: Response, next) => {
       try {
-        console.log(req.file, 4322);
         const file = req.file ? req.file.filename : null;
-        console.log(file, 243);
         res.status(201).json({ data: `${process.env.API_URL}/uploads/${file}`, message: 'file uploaded successfully' });
       } catch (error) {
         next(error);

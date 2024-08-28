@@ -1,9 +1,4 @@
-import Link from "next/link";
-import router from "next/router";
 import React from "react";
-import { AiFillGithub } from "react-icons/ai";
-import { CiLinkedin } from "react-icons/ci";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { navData } from "@/data/nav.data";
 

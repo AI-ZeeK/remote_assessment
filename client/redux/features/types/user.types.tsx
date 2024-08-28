@@ -6,6 +6,5 @@ export interface UserStateType {
     email: string;
     password: string;
   };
-  token: null | string;
   isFormData: boolean;
 }

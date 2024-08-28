@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
-import { RecipeService } from '@/services/recipe.service';
 import { CategoryService } from '@/services/category.service';
 import { Category } from '@prisma/client';
 

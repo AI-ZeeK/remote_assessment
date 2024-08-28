@@ -1,13 +1,9 @@
 "use client";
 import { navData } from "@/data/nav.data";
 import { useAppSelector } from "@/redux/hooks";
-import { Montserrat } from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { FaRegUser } from "react-icons/fa";
-import { IoSearch } from "react-icons/io5";
-import { LuShoppingCart } from "react-icons/lu";
 
 type Props = {};
 
