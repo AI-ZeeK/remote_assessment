@@ -1,6 +1,7 @@
 "use client";
 import RecipeCard from "@/components/Card/RecipeCard";
 import { SelectInput } from "@/components/Input/Index";
+import SpinnerPage from "@/components/Spinner/Spinner";
 import { openComponentModal } from "@/redux/features/slice/modal.slice";
 import { MODAL_ENUM } from "@/redux/features/types";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -14,7 +15,10 @@ export default function Home() {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [page_size, setPageSize] = useState(5);
-  const { data, refetch } = useFetchRecipesQuery({ page_size, page });
+  const { data, refetch, isLoading } = useFetchRecipesQuery({
+    page_size,
+    page,
+  });
   const { recipes, recipesMeta, rerender } = useAppSelector(
     (state) => state.app
   );
@@ -32,6 +36,7 @@ export default function Home() {
       transition={{ delay: 0.25, ease: "easeOut", duration: 0.25 }}
       className="min-h-screen"
     >
+      {isLoading && <SpinnerPage />}
       <div className="p-4 w-full flex justify-between gap-4">
         <div className="w-24">
           <SelectInput
@@ -63,7 +68,7 @@ export default function Home() {
       >
         {recipes.length ? (
           recipes.map((recipe) => (
-            <Fragment key={recipe.id}>
+            <Fragment key={recipe.id} data-testid="recipe-item">
               <RecipeCard recipe={recipe} data-testid="recipe-card" />
             </Fragment>
           ))

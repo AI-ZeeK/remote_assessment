@@ -18,6 +18,7 @@ type Props = {
   file?: boolean;
   islabel?: boolean;
   label?: string;
+  data_testid?: string;
   classname?: string;
   onChange: (t: any) => void;
 };
@@ -33,6 +34,7 @@ const Input = ({
   optionalLabel,
   value,
   file,
+  data_testid = "recipe-title-input",
   islabel = false,
   label,
   classname,
@@ -94,6 +96,7 @@ const Input = ({
             name={name}
             disabled={disabled}
             value={value}
+            data-testid={data_testid}
             minH={10}
             rows={5}
             onChange={onChange}
@@ -121,6 +124,7 @@ const Input = ({
             value={value}
             name={name}
             required={required}
+            data-testid={data_testid}
             className={cn("pointer-events-none", classname)}
             accept=".png, .jpg, .jpeg"
             disabled={disabled}
@@ -142,6 +146,7 @@ const Input = ({
             required
             name={name}
             type={type}
+            data-testid={data_testid}
             disabled={disabled}
             value={value}
             onChange={onChange}

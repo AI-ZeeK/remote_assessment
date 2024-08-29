@@ -9,8 +9,6 @@ import {
 import { ModalCloseButton, ModalContent, ModalHeader } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { UPLOAD } from "@/redux/services/CONSTANTS";
 import { closeModal } from "@/redux/features/slice/modal.slice";
 import { toast } from "sonner";
 import { setRerender } from "@/redux/features/slice/app.slice";
@@ -145,6 +143,7 @@ const RecipeModal = () => {
           placeholder={"What's the name of the dish"}
           islabel
           label="Title"
+          data_testid="recipe-title-input"
           name={"title"}
           value={formData.title}
           disabled={isLoading || _isLoading}
@@ -153,6 +152,7 @@ const RecipeModal = () => {
         <Input
           placeholder={"A brief description of the dish"}
           islabel
+          data_testid="recipe-description-input"
           label="Description"
           disabled={isLoading || _isLoading}
           name={"description"}
@@ -161,11 +161,14 @@ const RecipeModal = () => {
         />
         <CldUploadButton
           uploadPreset="assessment"
+          data-testid="file-upload-status"
           onSuccess={(result) => handleUploadSuccess(result)}
         >
           <Input
             placeholder={"What's the name of the dish"}
+            data-testid="file-input"
             islabel
+            data_testid="recipe-file-input"
             file
             label="Select an Image"
             name={"file"}
@@ -191,6 +194,7 @@ const RecipeModal = () => {
           optionalLabel="(separate with a comma)"
           label="Ingredients"
           name={"ingredients"}
+          data_testid="recipe-ingredients-input"
           value={formData.ingredients}
           onChange={handleInputChange}
         />
@@ -200,6 +204,7 @@ const RecipeModal = () => {
           islabel
           textarea
           label="Instructions"
+          data_testid="recipe-instructions-input"
           name={"instructions"}
           value={formData.instructions}
           onChange={handleInputChange}
