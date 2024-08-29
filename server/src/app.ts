@@ -9,7 +9,8 @@ import { NODE_ENV, PORT, LOG_FORMAT } from '@config';
 import { Routes } from '@interfaces/routes.interface';
 import { ErrorMiddleware } from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
-
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 export class App {
   public app: express.Application;
   public env: string;
@@ -23,6 +24,7 @@ export class App {
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializeErrorHandling();
+    this.initializeSwagger();
   }
 
   public listen() {
@@ -53,6 +55,29 @@ export class App {
     routes.forEach(route => {
       this.app.use('', route.router);
     });
+  }
+
+  private initializeSwagger() {
+    const options = {
+      swaggerDefinition: {
+        openapi: '3.0.0',
+        info: {
+          title: 'Recipe App API',
+          version: '1.0.0',
+          description: 'API documentation for the Recipe App',
+        },
+        servers: [
+          {
+            url: `http://localhost:${this.port}`,
+            description: 'Local server',
+          },
+        ],
+      },
+      apis: ['swagger.yaml'], // Update this path to where your OpenAPI YAML file is located
+    };
+
+    const specs = swaggerJSDoc(options);
+    this.app.use('/swagger', swaggerUi.serve, swaggerUi.setup(specs));
   }
 
   private initializeErrorHandling() {

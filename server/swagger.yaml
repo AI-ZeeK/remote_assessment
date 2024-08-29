@@ -1,123 +1,276 @@
+openapi: 3.0.0
+info:
+  title: Recipe App API
+  version: 1.0.0
+  description: API documentation for the Recipe App
+
 tags:
-- name: users
-  description: users API
+  - name: categories
+    description: Category management
+  - name: recipes
+    description: Recipe management
 
 paths:
-# [GET] users
-  /users:
+  /categories:
     get:
+      summary: Get all categories
       tags:
-      - users
-      summary: Find All Users
+        - categories
       responses:
-        200:
-          description: 'OK'
-        500:
-          description: 'Server Error'
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '500':
+          description: Server error
 
-# [POST] users
     post:
+      summary: Create a new category
       tags:
-      - users
-      summary: Add User
-      parameters:
-      - name: body
-        in: body
-        description: user Data
+        - categories
+      requestBody:
         required: true
-        schema:
-          $ref: '#/definitions/users'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryInput'
       responses:
-        201:
-          description: 'Created'
-        400:
-          description: 'Bad Request'
-        409:
-          description: 'Conflict'
-        500:
-          description: 'Server Error'
+        '201':
+          description: Category created
+        '400':
+          description: Bad request
+        '500':
+          description: Server error
 
-# [GET] users/id
-  /users/{id}:
+  /categories/{id}:
     get:
+      summary: Get a category by ID
       tags:
-      - users
-      summary: Find User By Id
+        - categories
       parameters:
-      - name: id
-        in: path
-        description: User Id
-        required: true
-        type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        200:
-          description: 'OK'
-        409:
-          description: 'Conflict'
-        500:
-          description: 'Server Error'
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '404':
+          description: Category not found
+        '500':
+          description: Server error
 
-# [PUT] users/id
     put:
+      summary: Update a category
       tags:
-      - users
-      summary: Update User By Id
+        - categories
       parameters:
-      - name: id
-        in: path
-        description: user Id
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
         required: true
-        type: integer
-      - name: body
-        in: body
-        description: user Data
-        required: true
-        schema:
-          $ref: '#/definitions/users'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryInput'
       responses:
-        200:
-          description: 'OK'
-        400:
-          description: 'Bad Request'
-        409:
-          description: 'Conflict'
-        500:
-          description: 'Server Error'
+        '200':
+          description: Category updated
+        '400':
+          description: Bad request
+        '404':
+          description: Category not found
+        '500':
+          description: Server error
 
-# [DELETE] users/id
     delete:
+      summary: Delete a category
       tags:
-      - users
-      summary: Delete User By Id
+        - categories
       parameters:
-      - name: id
-        in: path
-        description: user Id
-        required: true
-        type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        200:
-          description: 'OK'
-        409:
-          description: 'Conflict'
-        500:
-          description: 'Server Error'
+        '204':
+          description: Category deleted
+        '404':
+          description: Category not found
+        '500':
+          description: Server error
 
-# definitions
-definitions:
-  users:
-    type: object
-    required:
-        - email
-        - password
-    properties:
-      email:
-        type: string
-        description: user Email
-      password:
-        type: string
-        description: user Password
+  /recipes:
+    get:
+      summary: Get all recipes
+      tags:
+        - recipes
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recipe'
+        '500':
+          description: Server error
 
-schemes:
- - https
- - http
+    post:
+      summary: Create a new recipe
+      tags:
+        - recipes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeInput'
+      responses:
+        '201':
+          description: Recipe created
+        '400':
+          description: Bad request
+        '500':
+          description: Server error
+
+  /recipes/{id}:
+    get:
+      summary: Get a recipe by ID
+      tags:
+        - recipes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+        '404':
+          description: Recipe not found
+        '500':
+          description: Server error
+
+    put:
+      summary: Update a recipe
+      tags:
+        - recipes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeInput'
+      responses:
+        '200':
+          description: Recipe updated
+        '400':
+          description: Bad request
+        '404':
+          description: Recipe not found
+        '500':
+          description: Server error
+
+    delete:
+      summary: Delete a recipe
+      tags:
+        - recipes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Recipe deleted
+        '404':
+          description: Recipe not found
+        '500':
+          description: Server error
+
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+    CategoryInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        ingredients:
+          type: array
+          items:
+            type: string
+        instructions:
+          type: array
+          items:
+            type: string
+        categoryId:
+          type: string
+
+    RecipeInput:
+      type: object
+      required:
+        - title
+        - description
+        - ingredients
+        - instructions
+        - categoryId
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        ingredients:
+          type: string
+        instructions:
+          type: array
+          items:
+            type: string
+        categoryId:
+          type: string
