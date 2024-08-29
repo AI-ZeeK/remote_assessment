@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useAppDispatch } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import { MODAL_ENUM } from "@/redux/features/types";
+import { CldImage } from "next-cloudinary";
 
 type Props = {
   recipe: any;
@@ -45,7 +46,7 @@ const RecipeCard = ({ recipe }: Props) => {
         </span>
       </div>
       <div className={`relative overflow-hidden`}>
-        <Image
+        <CldImage
           src={recipe.file}
           alt=""
           width={200}

@@ -121,10 +121,8 @@ const Input = ({
             value={value}
             name={name}
             required={required}
-            className={cn("", classname)}
+            className={cn("pointer-events-none", classname)}
             accept=".png, .jpg, .jpeg"
-            onChange={onChange}
-            id="file-upload"
             disabled={disabled}
           />
         </div>

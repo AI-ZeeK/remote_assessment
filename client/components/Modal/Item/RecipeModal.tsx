@@ -14,12 +14,12 @@ import { UPLOAD } from "@/redux/services/CONSTANTS";
 import { closeModal } from "@/redux/features/slice/modal.slice";
 import { toast } from "sonner";
 import { setRerender } from "@/redux/features/slice/app.slice";
+import { CldUploadButton } from "next-cloudinary";
 
 const RecipeModal = () => {
   const { data } = useAppSelector((state) => state.modal);
   const [isUpdate, setIsUpdate] = useState(false);
   const [id, setId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
   useCategryQuery("");
   const [fetchRecipe] = useFetchRecipeMutation();
   const { categories } = useAppSelector((state) => state.app);
@@ -35,7 +35,7 @@ const RecipeModal = () => {
       error: _error,
     },
   ] = useUpdateRecipeMutation();
-  const [selectedFile, setSelectedFile] = useState<any>(null);
+  const [selectedFile, setSelectedFile] = useState<string>("");
   const cats = categories.map((category) => {
     return category.title;
   });
@@ -74,31 +74,11 @@ const RecipeModal = () => {
     }
   }, [data]);
 
-  const handleFileUpload = async (e: any) => {
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_DEV_API}${UPLOAD}`,
-        {
-          file: e.target.files[0],
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      if (response.data) {
-        toast.success("file uploaded successfully");
-        setSelectedFile(e.target.files[0]);
-        setFormData((pre) => ({ ...pre, file: response?.data?.data }));
-      }
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      toast.success("file upload unsuccessful");
-    }
+  const handleUploadSuccess = async (result: any) => {
+    const url = await result.info.secure_url;
+    console.log("url", result.info.original_filename);
+    setSelectedFile(result.info.original_filename);
+    setFormData((pre) => ({ ...pre, file: url }));
   };
 
   const handleSubmit = async (e: any) => {
@@ -179,22 +159,20 @@ const RecipeModal = () => {
           value={formData.description}
           onChange={handleInputChange}
         />
-        <Input
-          placeholder={"What's the name of the dish"}
-          islabel
-          disabled={loading}
-          file
-          required={isUpdate ? false : true}
-          label="Select an Image"
-          name={"file"}
-          value={selectedFile?.filename}
-          onChange={handleFileUpload}
-        />{" "}
-        {loading && (
-          <div className="h-1.5 w-full bg-slate-100 overflow-hidden">
-            <div className="progress w-full h-full bg-slate-500 left-right" />
-          </div>
-        )}
+        <CldUploadButton
+          uploadPreset="assessment"
+          onSuccess={(result) => handleUploadSuccess(result)}
+        >
+          <Input
+            placeholder={"What's the name of the dish"}
+            islabel
+            file
+            label="Select an Image"
+            name={"file"}
+            onChange={() => {}}
+          />
+        </CldUploadButton>
+        {selectedFile && <p className="p-2">Selected file: {selectedFile}</p>}
         <div className="">
           <SelectInput
             options={isUpdate ? [formData.category, ...cats] : cats}
@@ -228,7 +206,6 @@ const RecipeModal = () => {
         />
         <div className="h-[2px] w-full bg-indigo-600 opacity-20" />
         <Button
-          disabled={loading}
           isLoading={isLoading || _isLoading}
           name={isUpdate ? "Update" : "Create"}
         />
