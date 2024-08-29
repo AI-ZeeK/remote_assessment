@@ -1,41 +1,67 @@
 # Full Stack Recipe Management System
 
-A full-stack web application that allows users to manage a collection of recipes
+A robust web application designed for managing and sharing recipes, utilizing modern technologies and best practices to deliver a seamless user experience.
 
-## Backend Information
+## Features
 
-Backend built with Node.js - Express.js, used mongodb for the database
+- **CRUD Operations for Recipes**: Full control over recipe creation, editing, deletion, and viewing
+- **Image Upload and Management**: Integrated with Cloudinary for efficient image storage and manipulation
+- **Responsive Design**: Built with Tailwind CSS for a seamless experience on both mobile and desktop devices
+- **RESTful API with Swagger Documentation**: Interactive and comprehensive API documentation for developers
+- **Database Management with Prisma ORM**: Leveraging Prisma for efficient and type-safe database interactions
 
-[API DOCUMENTATION](https://documenter.getpostman.com/view/22436257/2sA3kaBJdi)
+## Backend
 
-### Running the server
+Built with Node.js and Express.js, our backend provides a robust and scalable foundation.
 
-server runs at port :8080, ensure port 8080 is exposed
+### Key Components
+
+- **Database**: MongoDB is used for flexible, document-based storage, with Prisma ORM ensuring type-safe interactions and efficient queries
+- **Authentication**: JWT for secure user sessions
+- **Image Handling**: CloudCloudinary integration allows for efficient image storage, transformation, and delivery.
+- **API Documentation**: Swagger UI provides clear and interactive API documentation, making it easier for developers to understand and test the API endpoints
+
+### Running the Server
 
 ```bash
     cd server
-    npm i
+    npm install
     npm run dev
 ```
 
-#### Server Deployment
+### API Documentation
 
-[https://old-server-2suz.onrender.com/](https://old-server-2suz.onrender.com/)
+Explore our comprehensive API documentation: [Swagger UI](https://remote-assessment.onrender.com/swagger)
 
-## Frontend Information
+### Deployment
 
-Frontend built with Next.js
+Backend is deployed at: [https://remote-assessment.onrender.com/api/](https://remote-assessment.onrender.com/api)
 
-### Running the client
+## Frontend
 
-client runs at port :3000
+The frontend is developed with Next.js, offering server-side rendering for enhanced performance and SEO
+
+### Key Features
+
+- **Server-Side Rendering (SSR)**: Improved performance and SEO benefits with Next.js
+- **Responsive Design**: Tailwind CSS is utilized for modern, responsive design, ensuring a consistent look and feel across devices
+- **State Management**: React hooks are used for efficient and clean state management throughout the application
+- **Form Handling and Validation**: Robust form handling and validation, ensuring data integrity and user-friendly experiences
+
+### Running the Client
 
 ```bash
     cd client
-    npm i --legacy-peer-deps
+    npm install --legacy-peer-deps
     npm run dev
 ```
 
-#### Client Deployment
+Client runs on port 3000.
 
-[https://ph-onsite.vercel.app](https://ph-onsite.vercel.app)
+### Deployment
+
+Frontend is deployed at: [https://remote-assessment.vercel.app/](https://remote-assessment.vercel.app/)
+
+## Conclusion
+
+This Full Stack Recipe Management System demonstrates the effective use of modern web development technologies, including Next.js, Prisma ORM, Tailwind CSS, and Cloudinary. The system is designed to be scalable, secure, and user-friendly, with a focus on performance and best practices. Whether you are managing a small personal recipe collection or building a large-scale application, this system provides a strong foundation and is ready for further enhancements.

@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["localhost", "assessment-yjv4.onrender.com"],
+    domains: ["localhost", "res.cloudinary.com"],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "assessment-yjv4.onrender.com",
+        hostname: "res.cloudinary.com",
         pathname: "**",
       },
     ],
