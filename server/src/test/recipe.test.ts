@@ -5,7 +5,6 @@ import { Container } from 'typedi';
 import { RecipeService } from '../services/recipe.service';
 import { Recipe } from '@prisma/client';
 
-// Mock the RecipeService
 const mockRecipeService = {
   createRecipe: jest.fn(),
   fetchAll: jest.fn(),
@@ -15,7 +14,6 @@ const mockRecipeService = {
   findUnique: jest.fn(),
 };
 
-// Register the mock service in the container before running tests
 beforeAll(() => {
   Container.set(RecipeService, mockRecipeService);
 });
@@ -28,9 +26,10 @@ jest.mock('../services/recipe.service', () => {
 
 describe('Recipe Route', () => {
   let app: App;
-
+  let server: any;
   beforeAll(() => {
     app = new App([new RecipeRoute()]);
+    server = app.getServer().listen();
   });
 
   beforeEach(() => {
@@ -122,7 +121,6 @@ describe('Recipe Route', () => {
   });
 
   it('should delete a recipe successfully', async () => {
-    // Setup mock data and behavior
     const mockRecipe = {
       id: '1',
       title: 'Test Recipe',
@@ -143,7 +141,6 @@ describe('Recipe Route', () => {
   it('should update a recipe successfully', async () => {
     const now = new Date().toISOString();
 
-    // Mock data before update
     const mockOriginalRecipe: Recipe = {
       id: '1',
       title: 'Original Recipe Title',
@@ -156,7 +153,6 @@ describe('Recipe Route', () => {
       updated_at: new Date(now),
     };
 
-    // Mock data after update
     const mockUpdatedRecipe: Recipe = {
       id: '1',
       title: 'Updated Recipe Title',
@@ -169,14 +165,13 @@ describe('Recipe Route', () => {
       updated_at: new Date(now),
     };
 
-    // Mock service methods
     mockRecipeService.findUnique.mockResolvedValue(mockOriginalRecipe);
     mockRecipeService.updateOne.mockResolvedValue(mockUpdatedRecipe);
 
     const res = await request(app.getServer()).put('/api/recipes/1').send({
       title: 'Updated Recipe Title',
       description: 'Updated Description',
-      ingredients: 'updatedIngredient1, updatedIngredient2', // Ensure this matches your DTO requirement
+      ingredients: 'updatedIngredient1, updatedIngredient2',
       instructions: 'Updated Instructions',
       file: 'updatedfile.txt',
       category_id: '456',
@@ -184,10 +179,8 @@ describe('Recipe Route', () => {
 
     const responseBody = res.body.data;
 
-    // Check status code
-    expect(res.statusCode).toBe(201); // Assuming the update returns a 201 status
+    expect(res.statusCode).toBe(201);
 
-    // Check response body
     expect(responseBody.title).toBe('Updated Recipe Title');
     expect(responseBody.description).toBe('Updated Description');
     expect(responseBody.ingredients).toEqual(['updatedIngredient1', 'updatedIngredient2']);
@@ -220,7 +213,6 @@ describe('Recipe Route', () => {
 
     expect(res.statusCode).toBe(200);
 
-    // Check each field individually
     expect(res.body.data.id).toBe(mockRecipe.id);
     expect(res.body.data.title).toBe(mockRecipe.title);
     expect(res.body.data.description).toBe(mockRecipe.description);
@@ -232,5 +224,9 @@ describe('Recipe Route', () => {
     expect(new Date(res.body.data.updated_at)).toEqual(mockRecipe.updated_at);
 
     expect(res.body.message).toBe('recipe fetched successfully');
+  });
+
+  afterAll(done => {
+    server.close(done);
   });
 });

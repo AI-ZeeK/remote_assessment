@@ -5,13 +5,11 @@ import { Container } from 'typedi';
 import { CategoryService } from '../services/category.service';
 import { Category } from '@prisma/client';
 
-// Mock the CategoryService
 const mockCategoryService = {
   createCategory: jest.fn(),
   categories: jest.fn(),
 };
 
-// Register the mock service in the container before running tests
 beforeAll(() => {
   Container.set(CategoryService, mockCategoryService);
 });
@@ -24,16 +22,21 @@ jest.mock('../services/category.service', () => {
 
 describe('Category Route', () => {
   let app: App;
+  let server: any;
 
   beforeAll(() => {
     app = new App([new CategoryRoute()]);
+    server = app.getServer().listen();
   });
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
+  afterAll(done => {
+    server.close(done);
+  });
+
   it('should create a category successfully', async () => {
-    // Setup mock data and behavior
     const now = new Date().toISOString();
     const mockCategory: Category = {
       id: '1',
@@ -61,7 +64,6 @@ describe('Category Route', () => {
   });
 
   it('should fetch all categories successfully', async () => {
-    // Setup mock data and behavior
     const now1 = new Date();
     const now2 = new Date();
     const mockCategories: Category[] = [
@@ -83,7 +85,6 @@ describe('Category Route', () => {
 
     const res = await request(app.getServer()).get('/api/category');
 
-    // Normalize dates in the response for comparison
     const responseBody = res.body.data.map((item: Category) => ({
       ...item,
       created_at: new Date(item.created_at),
