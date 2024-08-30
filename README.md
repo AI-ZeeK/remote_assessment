@@ -189,7 +189,8 @@ To run the Cypress tests for this project:
 
 ```bash
     cd client
-    np run dev
+    npm i --legacy-peer-deps
+    npm run dev
 ```
 
 3. Open a new terminal in the project's root directory.
@@ -197,6 +198,7 @@ To run the Cypress tests for this project:
 
 ```bash
    cd client
+   npm install cypress --save-dev
    npx cypress open
 ```
 
