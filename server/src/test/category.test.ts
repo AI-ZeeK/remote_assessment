@@ -32,9 +32,6 @@ describe('Category Route', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  afterAll(done => {
-    server.close(done);
-  });
 
   it('should create a category successfully', async () => {
     const now = new Date().toISOString();
@@ -94,5 +91,8 @@ describe('Category Route', () => {
     expect(res.statusCode).toBe(201);
     expect(responseBody).toEqual(mockCategories);
     expect(res.body.message).toBe('All categories fetched successfully');
+  });
+  afterAll(done => {
+    server.close(done);
   });
 });
