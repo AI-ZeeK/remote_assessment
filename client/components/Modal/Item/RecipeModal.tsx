@@ -35,7 +35,7 @@ const RecipeModal = () => {
   ] = useUpdateRecipeMutation();
   const [selectedFile, setSelectedFile] = useState<string>("");
   const cats = categories.map((category) => {
-    return category.title;
+    return category?.title;
   });
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -55,19 +55,19 @@ const RecipeModal = () => {
     if (data) {
       setIsUpdate(true);
       const info = JSON.parse(data);
-      setId(info.id);
-      fetchRecipe(info.id);
+      setId(info?.id);
+      fetchRecipe(info?.id);
       const updateCat = categories.find((category) => {
-        return category.id === info.category_id;
+        return category.id === info?.category_id;
       });
       const ingredients = info.ingredients.join(", ");
       setFormData((prev: any) => ({
         ...prev,
-        category: updateCat.title,
+        category: updateCat?.title,
         ingredients,
         description: info.description,
-        title: info.title,
-        instructions: info.instructions,
+        title: info?.title,
+        instructions: info?.instructions,
       }));
     }
   }, [data]);
@@ -85,12 +85,12 @@ const RecipeModal = () => {
       return category.title === formData.category;
     });
     const res: any = {
-      title: formData.title,
-      description: formData.description,
-      category_id: category.id,
+      title: formData?.title,
+      description: formData?.description,
+      category_id: category?.id,
       ingredients: formData.ingredients,
-      file: formData.file,
-      instructions: formData.instructions,
+      file: formData?.file,
+      instructions: formData?.instructions,
     };
     if (isUpdate) {
       await updateRecipe({ ...res, id: id as string });
@@ -145,7 +145,7 @@ const RecipeModal = () => {
           label="Title"
           data_testid="recipe-title-input"
           name={"title"}
-          value={formData.title}
+          value={formData?.title}
           disabled={isLoading || _isLoading}
           onChange={handleInputChange}
         />
